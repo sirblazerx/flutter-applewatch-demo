@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:watch/src/flutter_communicator.g.dart';
 
@@ -36,24 +38,26 @@ class _MyHomePageState extends State<MyHomePage>
   int _counter = 0;
 
   void _incrementCounter() async {
+    log("Increment from App");
     try {
       setState(() {
         _counter++;
       });
       await _watchCounterHostAPI.increment();
     } catch (e) {
-      print('Error: $e');
+      log('Error: $e');
     }
   }
 
   void _decrementCounter() async {
+    log("Decrement from App");
     try {
       setState(() {
         _counter--;
       });
       await _watchCounterHostAPI.decrement();
     } catch (e) {
-      print('Error: $e');
+      log('Error: $e');
     }
   }
 
@@ -93,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage>
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
+          const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: _decrementCounter,
             tooltip: 'Decrement',
@@ -106,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage>
   // Listen for the decrement event from the host
   @override
   void decrement() {
-    print("Received decrement event from host");
+    log("Received decrement event from host");
     setState(() {
       _counter--;
     });
@@ -115,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage>
   // Listen for the increment event from the host
   @override
   void increment() {
-    print("Received increment event from host");
+    log("Received increment event from host");
     setState(() {
       _counter++;
     });
